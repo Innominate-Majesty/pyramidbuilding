@@ -1,10 +1,21 @@
 package sjcc;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+
 
 public class App 
 {
 
+    private static final String PHARAOHS_JSON_PATH = "pharaoh.json";
+    private static final String PYRAMIDS_JSON_PATH = "pyramid.json";
+    private static Set<String> requestedPyramids = new HashSet<>();
     public static void main( String[] args )
     {
         Scanner userInput = new Scanner(System.in);
@@ -55,7 +66,18 @@ public class App
     }
     
     private static void listPharaohs() {
+        try {
+            String data = new String(Files.readAllBytes(Paths.get(PHARAOHS_JSON_PATH)));
+            JSONArray pharaohs = new JSONArray(data);
 
+            for (int i = 0; i < pharaohs.length(); i++) {
+                JSONObject pharaoh = pharaohs.getJSONObject(i);
+                System.out.println(pharaoh.getString("name"));
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void displayPharaohInfo(String pharaohID) {
@@ -71,7 +93,7 @@ public class App
     }
 
     private static void displayRequestedPyramids() {
-        
+
     }
     
 }
