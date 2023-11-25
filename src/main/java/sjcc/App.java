@@ -23,7 +23,7 @@ public class App
 
         while (!quit) {
             System.out.println("Enter a command: ");
-            String input = userInput.nextLine();
+            String input = userInput.nextLine().trim();
 
             switch (input) {
                 case "l":
@@ -32,9 +32,14 @@ public class App
                     break;
                 case "d":
                     //displaying information for a specific Egyptian pharoah
-                    System.out.println("Etner the ID of the pharaoh: ");
-                    String pharaohID = userInput.nextLine();
-                    displayPharaohInfo(pharaohID);
+                    System.out.println("Enter the ID of the pharaoh: ");
+                    String pharaohID = userInput.nextLine().trim();
+                    if (!pharaohID.matches("\\d+")) {
+                        System.out.println("Invalid. Please enter the correct ID");
+                    }
+                    else {
+                        displayPharaohInfo(pharaohID);
+                    }
                     break;
                 case "p":
                     //listing all the pyramids
@@ -42,9 +47,14 @@ public class App
                     break;
                 case "s":
                     //display a specific pyramid
-                    System.out.println("Etner the pyramid ID: ");
-                    String pyramidID = userInput.nextLine();
-                    displayPyramidInfo(pyramidID);
+                    System.out.println("Enter the pyramid ID: ");
+                    String pyramidID = userInput.nextLine().trim();
+                    if (!pyramidID.matches("\\d+")) {
+                        System.out.println("Invalid ID. Please enter the correct ID");
+                    }
+                    else {
+                        displayPyramidInfo(pyramidID);
+                    }
                     break;
                 case "r":
                     //dispaying a list of requested pyramids (without duplicates)
@@ -70,13 +80,18 @@ public class App
             String data = new String(Files.readAllBytes(Paths.get(PHARAOHS_JSON_PATH)));
             JSONArray pharaohs = new JSONArray(data);
 
+            if (pharaohs.isEmpty()) {
+                System.out.println("no pharaohs were found!");
+                return;
+            }
+
             for (int i = 0; i < pharaohs.length(); i++) {
                 JSONObject pharaoh = pharaohs.getJSONObject(i);
                 System.out.println(pharaoh.getString("name"));
             }
         }
         catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error reading pharaohs file! " + e.getMessage());
         }
     }
 
@@ -85,16 +100,23 @@ public class App
             String data = new String(Files.readAllBytes(Paths.get(PHARAOHS_JSON_PATH)));
             JSONArray pharaohs = new JSONArray(data);
 
+            boolean found = false;
+
             for (int i = 0; i < pharaohs.length(); i++) {
                 JSONObject pharaoh = pharaohs.getJSONObject(i);
-                if (pharaoh.getString("id").equals(pharaohID)) {
-                    System.out.println(pharaoh.toString());
+                if (pharaoh.getInt("id") == Integer.parseInt(pharaohID)) {
+                    System.out.println(pharaoh.toString(4));
+                    found = true;
                     break;
                 }
             }
+            
+            if (!found) {
+                System.out.println("Pharaoh with ID " + pharaohID + " not found.");
+            }
         }
         catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error reading pharaohs file: " + e.getMessage());
         }
     }
     
