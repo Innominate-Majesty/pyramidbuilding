@@ -54,5 +54,24 @@ public class App
         System.out.println("Goodbye!");
     }
     
+    private static void listPharaohs() {
+
+    }
+
+    private static void displayPharaohInfo(String pharaohID) {
+
+    }
+    
+    private static void listPyramids() {
+
+    }
+
+    private static void displayPyramidInfo(String pyramidID) {
+
+    }
+
+    private static void displayRequestedPyramids() {
+        
+    }
     
 }
