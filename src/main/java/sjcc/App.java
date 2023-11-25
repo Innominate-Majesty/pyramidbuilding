@@ -81,7 +81,21 @@ public class App
     }
 
     private static void displayPharaohInfo(String pharaohID) {
+        try {
+            String data = new String(Files.readAllBytes(Paths.get(PHARAOHS_JSON_PATH)));
+            JSONArray pharaohs = new JSONArray(data);
 
+            for (int i = 0; i < pharaohs.length(); i++) {
+                JSONObject pharaoh = pharaohs.getJSONObject(i);
+                if (pharaoh.getString("id").equals(pharaohID)) {
+                    System.out.println(pharaoh.toString());
+                    break;
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     private static void listPyramids() {
