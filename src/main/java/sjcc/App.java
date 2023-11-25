@@ -115,7 +115,22 @@ public class App
     }
 
     private static void displayPyramidInfo(String pyramidID) {
+        try {
+            String data = new String(Files.readAllBytes(Paths.get(PYRAMIDS_JSON_PATH)));
+            JSONArray pyramids = new JSONArray();
 
+            for (int i = 0; i < pyramids.length(); i++) {
+                JSONObject pyramid = pyramids.getJSONObject(i);
+                if (pyramid.getString("id").equals(pyramidID)) {
+                    System.out.println(pyramid.toString());
+                    requestedPyramids.add(pyramidID);
+                    break;
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void displayRequestedPyramids() {
