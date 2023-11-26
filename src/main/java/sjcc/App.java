@@ -75,58 +75,37 @@ public class App
         userInput.close();
         System.out.println("Goodbye!");
     }
-    
-    private static String readFileFromClasspath(String path) throws IOException {
-        InputStream inputStream = App.class.getResourceAsStream(path);
-        if (inputStream == null) {
-            throw new IOException("Resource not found! " + path);
-        }
-        return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 
-    }
     
     private static void listPharaohs() {
-        try {
-            String data = readFileFromClasspath(PHARAOHS_JSON_PATH);
-            JSONArray pharaohs = new JSONArray(data);
-
-            if (pharaohs.isEmpty()) {
-                System.out.println("no pharaohs were found!");
-                return;
-            }
-
-            for (int i = 0; i < pharaohs.length(); i++) {
-                JSONObject pharaoh = pharaohs.getJSONObject(i);
-                System.out.println(pharaoh.getString("name"));
-            }
+        JSONArray pharaohs = JSONFile.readArray(PHARAOHS_JSON_PATH);
+        if (pharaohs == null || pharaohs.length() == 0) {
+            System.out.println("No pharaohs were found!");
+            return;
         }
-        catch (IOException e) {
-            System.out.println("Error reading pharaohs file! " + e.getMessage());
+        for (Object o : pharaohs) {
+            if (o instanceof JSONObject) {
+                JSONObject pharaoh = (JSONObject) o;
+                System.out.println(pharaoh.optString("name"));
+            }
         }
     }
 
     private static void displayPharaohInfo(String pharaohID) {
-        try {
-            String data = readFileFromClasspath(PHARAOHS_JSON_PATH);
-            JSONArray pharaohs = new JSONArray(data);
-
-            boolean found = false;
-
-            for (int i = 0; i < pharaohs.length(); i++) {
-                JSONObject pharaoh = pharaohs.getJSONObject(i);
-                if (pharaoh.getInt("id") == Integer.parseInt(pharaohID)) {
+        JSONArray pharaohs = JSONFile.readArray(PHARAOHS_JSON_PATH);
+        boolean found = false;
+        for (Object o : pharaohs) {
+            if (o instanceof JSONObject) {
+                JSONObject pharaoh = (JSONObject) o;
+                if (pharaoh.optInt("id") == Integer.parseInt(pharaohID)) {
                     System.out.println(pharaoh.toString(4));
                     found = true;
                     break;
                 }
             }
-            
-            if (!found) {
-                System.out.println("Pharaoh with ID " + pharaohID + " not found.");
-            }
         }
-        catch (IOException e) {
-            System.out.println("Error reading pharaohs file: " + e.getMessage());
+        if (!found) {
+            System.out.println("Pharaoh with ID " + pharaohID + " not found!");
         }
     }
     

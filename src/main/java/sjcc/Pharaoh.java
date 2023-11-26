@@ -1,4 +1,4 @@
-package sjcc.resources;
+package sjcc;
 
 // pharoah class, that corresponds to the information in the json file
 public class Pharaoh {
