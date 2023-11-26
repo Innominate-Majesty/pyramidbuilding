@@ -1,11 +1,12 @@
 package sjcc;
 
-import org.apache.logging.log4j.core.util.JsonUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+
 
 
 public class App 
@@ -145,7 +146,7 @@ public class App
                 Pyramid pyramid = new Pyramid (
                     pyramidJSON.optInt("id"),
                     pyramidJSON.optString("name"),
-                        JsonUtils.toStringArray(pyramidJSON.optJSONArray("contributors"))
+                        toStringArray(pyramidJSON.optJSONArray("contributors"))
                 );
                 pyramid.printDetails();
             }
@@ -162,7 +163,7 @@ public class App
                     Pyramid pyramid = new Pyramid(
                         pyramidJSON.optInt("id"),
                         pyramidJSON.optString("name"),
-                        JSONUtils.toStringArray(pyramidJSON.optJSONArray("contirbutors"))
+                        toStringArray(pyramidJSON.optJSONArray("contirbutors"))
                     );
                     pyramid.printDetails();
                     requestedPyramids.add(pyramidID);
@@ -183,14 +184,46 @@ public class App
             if (requestedPyramids.contains(String.valueOf(pyramidJSON.optInt("id")))) {
                 Pyramid pyramid = new Pyramid (
                     pyramidJSON.optInt("id"),
-                    pyramidJSON.optString("name");
-                    JSONUtils.toStringArray(pyramidJSON.optJSONArray("contributors"))
+                    pyramidJSON.optString("name"),
+                    toStringArray(pyramidJSON.optJSONArray("contributors"))
                 );
                 pyramid.printDetails();
             }
         }
     }
 
-    
+    //method that converts JSONArray to String Array
+    public static String[] toStringArray(JSONArray array) {
+        if (array == null) {
+            return new String[0];
+        }
+        String[] arr = new String[array.length()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = array.optString(i);
+        }
+        return arr;
+    }
+
+    //method to find the pharaohs by their hieroglyphic
+    private static Pharaoh findPharaoh(String hieroglyphic) {
+        JSONArray pharaohs = JSONFile.readArray(PHARAOHS_JSON_PATH);
+        for (Object o : pharaohs) {
+            if (o instanceof JSONObject) {
+                JSONObject pharaohJSON = (JSONObject) o;
+                if (hieroglyphic.equals(pharaohJSON.optString("hieroglyphic"))) {
+                    return new Pharaoh(
+                        pharaohJSON.optInt("id"),
+                        pharaohJSON.optString("name"),
+                        pharaohJSON.optInt("begin"),
+                        pharaohJSON.optInt("end"),
+                        pharaohJSON.optInt("contributions"),
+                        pharaohJSON.optString("hieroglyphic")
+                    );
+                }
+            }
+        }
+
+        return null;
+    }
     
 }
