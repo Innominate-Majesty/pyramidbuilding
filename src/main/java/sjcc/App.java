@@ -125,9 +125,17 @@ public class App
         boolean found = false;
         for (Object o : pharaohs) {
             if (o instanceof JSONObject) {
-                JSONObject pharaoh = (JSONObject) o;
-                if (pharaoh.optInt("id") == Integer.parseInt(pharaohID)) {
-                    System.out.println(pharaoh.toString(4));
+                JSONObject pharaohJSON = (JSONObject) o;
+                if (String.valueOf(pharaohJSON.optInt("id")).equals(pharaohID)) {
+                    Pharaoh pharaoh = new Pharaoh(
+                        pharaohJSON.optInt("id"),
+                        pharaohJSON.optString("name"),
+                        pharaohJSON.optInt("begin"),
+                        pharaohJSON.optInt("end"),
+                        pharaohJSON.optInt("contribution"),
+                        pharaohJSON.optString("hieroglyphic")
+                    );
+                    pharaoh.print();
                     found = true;
                     break;
                 }
@@ -191,6 +199,7 @@ public class App
                     JSONObject pyramid = (JSONObject) o;
                     if (String.valueOf(pyramid.optInt("id")).equals(id)) {
                         System.out.printf("%-25s %s\n", id, pyramid.optString("name"));
+                        break;
                     }
                 }
             }

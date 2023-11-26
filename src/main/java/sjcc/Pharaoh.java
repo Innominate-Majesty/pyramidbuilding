@@ -57,7 +57,7 @@ public class Pharaoh {
     System.out.println("********************************************************************************\n");
 
     System.out.printf("Pharaoh %s\n", name);
-    System.out.printf("\tid: %d\n", id);
+    System.out.printf("\tID: %d\n", id);
     System.out.printf("\tbegin: %d B.C.\n", begin);
     System.out.printf("\tend: %d B.C.\n", end);
     System.out.printf("\tcontribution: %d gold coins\n", contribution);
