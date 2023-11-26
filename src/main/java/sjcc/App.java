@@ -110,54 +110,41 @@ public class App
     }
     
     private static void listPyramids() {
-        try {
-            String data = readFileFromClasspath(PYRAMIDS_JSON_PATH);
-            JSONArray pyramids = new JSONArray(data);
-
-            for (int i = 0; i < pyramids.length(); i++) {
-                JSONObject pyramid = pyramids.getJSONObject(i);
-                System.out.println(pyramid.getString("name"));
+        JSONArray pyramids = JSONFile.readArray(PYRAMIDS_JSON_PATH);
+        for (Object o : pyramids) {
+            if (o instanceof JSONObject) {
+                JSONObject pyramid = (JSONObject) o;
+                System.out.println(pyramid.optString("name"));
             }
-
-        }
-        catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     private static void displayPyramidInfo(String pyramidID) {
-        try {
-            String data = readFileFromClasspath(PYRAMIDS_JSON_PATH);
-            JSONArray pyramids = new JSONArray(data);
-
-            for (int i = 0; i < pyramids.length(); i++) {
-                JSONObject pyramid = pyramids.getJSONObject(i);
-                if (pyramid.getString("id").equals(pyramidID)) {
-                    System.out.println(pyramid.toString());
+        JSONArray pyramids = JSONFile.readArray(PYRAMIDS_JSON_PATH);
+        boolean found = false;
+        for (Object o : pyramids) {
+            if (o instanceof JSONObject) {
+                JSONObject pyramid = (JSONObject) o;
+                if (String.valueOf(pyramid.optInt("id")).equals(pyramidID)) {
+                    System.out.println(pyramid.toString(4));
                     requestedPyramids.add(pyramidID);
+                    found = true;
                     break;
                 }
             }
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        if (!found) {
+            System.out.println("Pyramid with ID " + pyramidID + " not found!");
         }
     }
 
     private static void displayRequestedPyramids() {
-        try {
-            String data = readFileFromClasspath(PYRAMIDS_JSON_PATH);
-            JSONArray pyramids = new JSONArray(data);
-
-            for (int i = 0; i < pyramids.length(); i++) {
-                JSONObject pyramid = pyramids.getJSONObject(i);
-                if (requestedPyramids.contains(pyramid.getString("id"))) {
-                    System.out.println(pyramid.getString("name"));
-                }
+        JSONArray pyramids = JSONFile.readArray(PYRAMIDS_JSON_PATH);
+        for (Object o : pyramids) {
+            JSONObject pyramid = (JSONObject) o;
+            if (requestedPyramids.contains(String.valueOf(pyramid.optInt("id")))) {
+                System.out.println(pyramid.optString("name"));
             }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
