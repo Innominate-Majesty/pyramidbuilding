@@ -18,22 +18,26 @@ public class App
 
     private static final String PHARAOHS_JSON_PATH = "/pharaoh.json";
     private static final String PYRAMIDS_JSON_PATH = "/pyramid.json";
+    
+    
     private static Set<String> requestedPyramids = new HashSet<>();
     public static void main( String[] args )
     {
         Scanner userInput = new Scanner(System.in);
         boolean quit = false;
 
+        printMenu();
+
         while (!quit) {
             System.out.println("Enter a command: ");
             String input = userInput.nextLine().trim();
 
             switch (input) {
-                case "l":
+                case "1":
                     //listing all the pharaohs
                     listPharaohs();
                     break;
-                case "d":
+                case "2":
                     //displaying information for a specific Egyptian pharoah
                     System.out.println("Enter the ID of the pharaoh: ");
                     String pharaohID = userInput.nextLine().trim();
@@ -43,11 +47,11 @@ public class App
                         displayPharaohInfo(pharaohID);
                     }
                     break;
-                case "p":
+                case "3":
                     //listing all the pyramids
                     listPyramids();
                     break;
-                case "s":
+                case "4":
                     //display a specific pyramid
                     System.out.println("Enter the pyramid ID: ");
                     String pyramidID = userInput.nextLine().trim();
@@ -57,7 +61,7 @@ public class App
                         displayPyramidInfo(pyramidID);
                     }
                     break;
-                case "r":
+                case "5":
                     //dispaying a list of requested pyramids (without duplicates)
                     displayRequestedPyramids();
                     break;
@@ -77,6 +81,24 @@ public class App
     }
 
     
+    public static void printMenu() {
+        System.out.println("  ");
+        System.out.println("****************************************\n");
+        System.out.println("     Building a Pyramids with Venus   \n");
+        System.out.println("****************************************\n");
+        System.out.println(" ");
+        System.out.println("****************************************\n");
+        System.out.println("1    :    display a list of all the pharaohs");
+        System.out.println("2    :    display information about a pharaoh");
+        System.out.println("3    :    display all the pyramids");
+        System.out.println("4    :    display a specific pyramid");
+        System.out.println("5    :    display all requested pyramids without duplicates");;
+        System.out.println("q    :    quit\n");
+        System.out.println("****************************************\n");
+
+    }
+    
+
     private static void listPharaohs() {
         JSONArray pharaohs = JSONFile.readArray(PHARAOHS_JSON_PATH);
         if (pharaohs == null || pharaohs.length() == 0) {
