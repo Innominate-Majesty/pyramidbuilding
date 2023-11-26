@@ -148,7 +148,7 @@ public class App
                     pyramidJSON.optString("name"),
                         toStringArray(pyramidJSON.optJSONArray("contributors"))
                 );
-                pyramid.printDetails();
+                pyramid.printDetailsWithContributors();
             }
         }
     }
@@ -165,7 +165,7 @@ public class App
                         pyramidJSON.optString("name"),
                         toStringArray(pyramidJSON.optJSONArray("contirbutors"))
                     );
-                    pyramid.printDetails();
+                    pyramid.printDetailsWithContributors();
                     requestedPyramids.add(pyramidID);
                     found = true;
                     break;
@@ -187,7 +187,7 @@ public class App
                     pyramidJSON.optString("name"),
                     toStringArray(pyramidJSON.optJSONArray("contributors"))
                 );
-                pyramid.printDetails();
+                pyramid.printDetailsWithContributors();
             }
         }
     }
