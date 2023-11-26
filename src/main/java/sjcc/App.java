@@ -179,15 +179,20 @@ public class App
 
     private static void displayRequestedPyramids() {
         JSONArray pyramids = JSONFile.readArray(PYRAMIDS_JSON_PATH);
-        for (Object o : pyramids) {
-            JSONObject pyramidJSON = (JSONObject) o;
-            if (requestedPyramids.contains(String.valueOf(pyramidJSON.optInt("id")))) {
-                Pyramid pyramid = new Pyramid (
-                    pyramidJSON.optInt("id"),
-                    pyramidJSON.optString("name"),
-                    toStringArray(pyramidJSON.optJSONArray("contributors"))
-                );
-                pyramid.printDetailsWithContributors();
+        System.out.println("********************************************************\n");
+        System.out.println("          List of Requested Pyramids         \n");
+        System.out.printf("%-25s %s\n", "ID", "Name\n");
+
+        System.out.println("********************************************************\n");
+
+        for (String id : requestedPyramids) {
+            for (Object o : pyramids) {
+                if (o instanceof JSONObject) {
+                    JSONObject pyramid = (JSONObject) o;
+                    if (String.valueOf(pyramid.optInt("id")).equals(id)) {
+                        System.out.printf("%-25s %s\n", id, pyramid.optString("name"));
+                    }
+                }
             }
         }
     }
