@@ -54,7 +54,7 @@ public class Pharaoh {
 
   // printing method (formatting)
   public void print() {
-    System.out.println("****************************************\n");
+    System.out.println("********************************************************************************\n");
 
     System.out.printf("Pharaoh %s\n", name);
     System.out.printf("\tid: %d\n", id);
@@ -63,7 +63,7 @@ public class Pharaoh {
     System.out.printf("\tcontribution: %d gold coins\n", contribution);
     System.out.printf("\thieroglyphic: %s\n", hieroglyphic);
 
-    System.out.println("****************************************\n");
+    System.out.println("********************************************************************************\n");
 
   }
 }

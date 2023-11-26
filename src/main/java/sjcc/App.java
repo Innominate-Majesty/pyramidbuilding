@@ -1,5 +1,6 @@
 package sjcc;
 
+import org.apache.logging.log4j.core.util.JsonUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashSet;
@@ -140,8 +141,13 @@ public class App
         JSONArray pyramids = JSONFile.readArray(PYRAMIDS_JSON_PATH);
         for (Object o : pyramids) {
             if (o instanceof JSONObject) {
-                JSONObject pyramid = (JSONObject) o;
-                System.out.println(pyramid.optString("name"));
+                JSONObject pyramidJSON = (JSONObject) o;
+                Pyramid pyramid = new Pyramid (
+                    pyramidJSON.optInt("id"),
+                    pyramidJSON.optString("name"),
+                        JsonUtils.toStringArray(pyramidJSON.optJSONArray("contributors"))
+                );
+                pyramid.printDetails();
             }
         }
     }
@@ -151,9 +157,14 @@ public class App
         boolean found = false;
         for (Object o : pyramids) {
             if (o instanceof JSONObject) {
-                JSONObject pyramid = (JSONObject) o;
-                if (String.valueOf(pyramid.optInt("id")).equals(pyramidID)) {
-                    System.out.println(pyramid.toString(4));
+                JSONObject pyramidJSON = (JSONObject) o;
+                if (String.valueOf(pyramidJSON.optInt("id")).equals(pyramidID)) {
+                    Pyramid pyramid = new Pyramid(
+                        pyramidJSON.optInt("id"),
+                        pyramidJSON.optString("name"),
+                        JSONUtils.toStringArray(pyramidJSON.optJSONArray("contirbutors"))
+                    );
+                    pyramid.printDetails();
                     requestedPyramids.add(pyramidID);
                     found = true;
                     break;
@@ -168,11 +179,18 @@ public class App
     private static void displayRequestedPyramids() {
         JSONArray pyramids = JSONFile.readArray(PYRAMIDS_JSON_PATH);
         for (Object o : pyramids) {
-            JSONObject pyramid = (JSONObject) o;
-            if (requestedPyramids.contains(String.valueOf(pyramid.optInt("id")))) {
-                System.out.println(pyramid.optString("name"));
+            JSONObject pyramidJSON = (JSONObject) o;
+            if (requestedPyramids.contains(String.valueOf(pyramidJSON.optInt("id")))) {
+                Pyramid pyramid = new Pyramid (
+                    pyramidJSON.optInt("id"),
+                    pyramidJSON.optString("name");
+                    JSONUtils.toStringArray(pyramidJSON.optJSONArray("contributors"))
+                );
+                pyramid.printDetails();
             }
         }
     }
+
+    
     
 }
