@@ -2,12 +2,6 @@ package sjcc;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -21,6 +15,9 @@ public class App
     
     
     private static Set<String> requestedPyramids = new HashSet<>();
+
+    
+
     public static void main( String[] args )
     {
         Scanner userInput = new Scanner(System.in);

@@ -28,6 +28,30 @@ public class Pharaoh {
     hieroglyphic = pharaohHieroglyphic;
   }
 
+  //Getters
+  public Integer getID() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+    
+  public Integer getBegin() {
+    return begin;
+  }
+    
+  public Integer getEnd() {
+    return end;
+  }
+    
+  public Integer getContribution() {
+    return contribution;
+  }
+    
+  public String getHieroglyphic() {
+    return hieroglyphic; }
+
   // print pharaoh
   public void print() {
     System.out.printf("Pharaoh %s\n", name);
