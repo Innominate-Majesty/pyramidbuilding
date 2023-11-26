@@ -163,7 +163,7 @@ public class App
                     Pyramid pyramid = new Pyramid(
                         pyramidJSON.optInt("id"),
                         pyramidJSON.optString("name"),
-                        toStringArray(pyramidJSON.optJSONArray("contirbutors"))
+                        toStringArray(pyramidJSON.optJSONArray("contributors"))
                     );
                     pyramid.printDetailsWithContributors();
                     requestedPyramids.add(pyramidID);
@@ -205,7 +205,7 @@ public class App
     }
 
     //method to find the pharaohs by their hieroglyphic
-    private static Pharaoh findPharaoh(String hieroglyphic) {
+    public static Pharaoh findPharaohHieroglyphic(String hieroglyphic) {
         JSONArray pharaohs = JSONFile.readArray(PHARAOHS_JSON_PATH);
         for (Object o : pharaohs) {
             if (o instanceof JSONObject) {
@@ -216,7 +216,7 @@ public class App
                         pharaohJSON.optString("name"),
                         pharaohJSON.optInt("begin"),
                         pharaohJSON.optInt("end"),
-                        pharaohJSON.optInt("contributions"),
+                        pharaohJSON.optInt("contribution"),
                         pharaohJSON.optString("hieroglyphic")
                     );
                 }
