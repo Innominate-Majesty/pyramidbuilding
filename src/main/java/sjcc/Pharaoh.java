@@ -52,13 +52,18 @@ public class Pharaoh {
   public String getHieroglyphic() {
     return hieroglyphic; }
 
-  // print pharaoh
+  // printing method (formatting)
   public void print() {
+    System.out.println("****************************************\n");
+
     System.out.printf("Pharaoh %s\n", name);
     System.out.printf("\tid: %d\n", id);
     System.out.printf("\tbegin: %d B.C.\n", begin);
     System.out.printf("\tend: %d B.C.\n", end);
     System.out.printf("\tcontribution: %d gold coins\n", contribution);
     System.out.printf("\thieroglyphic: %s\n", hieroglyphic);
+
+    System.out.println("****************************************\n");
+
   }
 }

@@ -104,8 +104,16 @@ public class App
         }
         for (Object o : pharaohs) {
             if (o instanceof JSONObject) {
-                JSONObject pharaoh = (JSONObject) o;
-                System.out.println(pharaoh.optString("name"));
+                JSONObject pharaohJSON = (JSONObject) o;
+                Pharaoh pharaoh = new Pharaoh (
+                    pharaohJSON.getInt("id"), 
+                    pharaohJSON.getString("name"),
+                    pharaohJSON.getInt("begin"),
+                    pharaohJSON.getInt("end"),
+                    pharaohJSON.getInt("contribution"),
+                    pharaohJSON.getString("hieroglyphic")
+                );
+                pharaoh.print();
             }
         }
     }
